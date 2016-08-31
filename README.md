@@ -7,7 +7,7 @@
 [![Version][version-image]][version-url]
 [![Build Status][build-image]][build-url]
 [![Dependency Status][dependencies-image]][dependencies-url]
-[![npm](https://img.shields.io/npm/dm/grunt-angular-file-loader.svg?style=flat)](https://www.npmjs.com/package/grunt-angular-file-loader)
+[![npm](https://img.shields.io/npm/dm/grunt-angular-file-loader.svg?style=flat)](https://www.npmjs.com/package/grunt-angular-file-loader2)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -376,15 +376,17 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 *   1.1.4   Minor correction
 *   1.1.5   Correct error with relative : "String"
 *   1.2.0   Improvements from pull Request
+-
+*   2.0.0   Fork with updated dependencies
 
-[build-image]:            http://img.shields.io/travis/AntoineMary/grunt-angular-file-loader.svg?style=flat
-[build-url]:              http://travis-ci.org/AntoineMary/grunt-angular-file-loader
+[build-image]:            http://img.shields.io/travis/noXi89/grunt-angular-file-loader2.svg?style=flat
+[build-url]:              http://travis-ci.org/noXi89/grunt-angular-file-loader2
 
-[dependencies-image]:     http://img.shields.io/gemnasium/AntoineMary/grunt-angular-file-loader.svg?style=flat
-[dependencies-url]:       https://gemnasium.com/AntoineMary/grunt-angular-file-loader
+[dependencies-image]:     http://img.shields.io/gemnasium/noXi89/grunt-angular-file-loader2.svg?style=flat
+[dependencies-url]:       https://gemnasium.com/noXi89/grunt-angular-file-loader2
 
 [license-image]:          http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]:            LICENSE
 
-[version-image]:          http://img.shields.io/npm/v/grunt-angular-file-loader.svg?style=flat
-[version-url]:            https://npmjs.org/package/grunt-angular-file-loader
+[version-image]:          http://img.shields.io/npm/v/grunt-angular-file-loader2.svg?style=flat
+[version-url]:            https://npmjs.org/package/grunt-angular-file-loader2
