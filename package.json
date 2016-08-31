@@ -39,6 +39,6 @@
   ],
   "dependencies": {
     "ng-dependencies": "^0.8.1",
-    "toposort": "^0.2.10"
+    "toposort": "^1.0.0"
   }
 }
