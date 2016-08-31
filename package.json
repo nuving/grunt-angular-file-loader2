@@ -1,10 +1,11 @@
 {
   "name": "grunt-angular-file-loader2",
   "description": "Automatically sort and inject AngularJS app files depending on module definitions and usage. Based on grunt-angular-file-loader.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/AntoineMary/grunt-angular-file-loader",
   "author": {
-    "name": "noXi89"
+    "name": "noXi89",
+    "email": "ringelschwanzmongo@gmail.com"
   },
   "repository": "noXi89/grunt-angular-file-loader2",
   "bugs": {
