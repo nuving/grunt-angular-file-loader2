@@ -1,6 +1,7 @@
-# grunt-angular-file-loader
+# grunt-angular-file-loader2
 
 > Automatically sort and inject AngularJS app files depending on module definitions and usage
+> based on grunt-angular-file-loader which seems no longer to be updated 
 
 [![License][license-image]][license-url]
 [![Version][version-image]][version-url]

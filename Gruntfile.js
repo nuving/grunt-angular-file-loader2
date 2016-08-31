@@ -1,8 +1,8 @@
 /*
- * grunt-angular-file-loader
- * https://bitbucket.org/AntoineMary/grunt-angular-filesort
+ * grunt-angular-file-loader2
+ * https://github.com/noXi89/grunt-angular-file-loader2
  *
- * Copyright (c) 2015 Antoine Mary
+ * Copyright (c) 2016 noXi89
  * Licensed under the MIT license.
  */
 
