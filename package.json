@@ -1,10 +1,11 @@
 {
   "name": "grunt-angular-file-loader2",
   "description": "Automatically sort and inject AngularJS app files depending on module definitions and usage. Based on grunt-angular-file-loader.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/AntoineMary/grunt-angular-file-loader",
   "author": {
-    "name": "noXi89"
+    "name": "noXi89",
+    "email": "ringelschwanzmongo@gmail.com"
   },
   "repository": "noXi89/grunt-angular-file-loader2",
   "bugs": {
@@ -17,16 +18,16 @@
     }
   ],
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4.5.0"
   },
   "scripts": {
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "^0.11.2",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-nodeunit": "^0.4.1",
-    "grunt": "^0.4.5"
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt": "^1.0.1"
   },
   "keywords": [
     "gruntplugin",
@@ -38,6 +39,6 @@
   ],
   "dependencies": {
     "ng-dependencies": "^0.8.1",
-    "toposort": "^0.2.10"
+    "toposort": "^1.0.0"
   }
 }

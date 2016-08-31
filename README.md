@@ -376,7 +376,6 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 *   1.1.4   Minor correction
 *   1.1.5   Correct error with relative : "String"
 *   1.2.0   Improvements from pull Request
--
 *   2.0.0   Fork with updated dependencies
 
 [build-image]:            http://img.shields.io/travis/noXi89/grunt-angular-file-loader2.svg?style=flat
