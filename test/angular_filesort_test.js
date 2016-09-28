@@ -111,5 +111,48 @@ exports.angularFileLoader = {
     test.equal(actual, expected, 'Injection must be done');
 
     test.done();
+  },
+  
+   custom_tag_pug: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/web/pug/custom_tag.pug');
+    var expected = grunt.file.read('test/expected/pug/custom_tag.pug');
+    test.equal(actual, expected, 'Injection must be done');
+
+    test.done();
+  },
+
+  default_options_pug: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/web/pug/default_options.pug');
+    var expected = grunt.file.read('test/expected/pug/default_options.pug');
+
+    test.equal(actual, expected, 'Injection must be done');
+
+    test.done();
+  },
+
+  relative_false_pug: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/web/pug/relative_false.pug');
+    var expected = grunt.file.read('test/expected/pug/relative_false.pug');
+
+    test.equal(actual, expected, 'Injection must be done');
+
+    test.done();
+  },
+
+  relative_string_pug: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('test/fixtures/web/pug/relative_string.pug');
+    var expected = grunt.file.read('test/expected/pug/relative_string.pug');
+
+    test.equal(actual, expected, 'Injection must be done');
+
+    test.done();
   }
 };

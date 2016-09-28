@@ -49,6 +49,14 @@ module.exports = function (grunt) {
                     start: '// ',
                     end:   ''
                 }
+            },
+            pug: {
+                recipe:  'script(src=\'%\' type=\'text/javascript\')',
+                regex:   new RegExp('//\\s*' + options.startTag + '(\\s*)(\\n|\\r|.)*?//\\s*' + options.endTag, 'gi'),
+                comment: {
+                    start: '// ',
+                    end:   ''
+                }
             }
         };
 
