@@ -151,7 +151,7 @@ module.exports = function (grunt) {
 
         function resolvePath(from, to) {
             if (grunt.util.kindOf(options.relative) === "string") {
-                return (path.relative((path.dirname(options.relative) === '.') ? options.prefix + options.relative : options.prefix + path.dirname(options.relative), to)).replace(/\\/g, '/');
+                return options.prefix + (path.relative((path.dirname(options.relative) === '.') ? options.relative : path.dirname(options.relative), to)).replace(/\\/g, '/');
 
             } else if (grunt.util.kindOf(options.relative) === "boolean" && options.relative === true) {
                 return options.prefix + (path.relative(path.dirname(from), to)).replace(/\\/g, '/');
