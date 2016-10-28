@@ -25,11 +25,13 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('angularFileLoader', 'Automatically sort and inject AngularJS app files depending on module definitions and usage', function () {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
-            startTag: 'angular',
-            endTag:   'endangular',
+            startTag: '<!-- angular -->',
+            endTag:   '<!-- endangular -->',
+			fileTmpl: '<script src="%s"></script>',
             scripts:  null,
-            relative: true,
-            prefix: ''
+			appRoot: '',
+			relative: false,
+			inline: false
         });
 
         var ANGULAR_MODULE = 'ng';
@@ -37,7 +39,8 @@ module.exports = function (grunt) {
         var supportedExt = {
             html: {
                 recipe:  '<script src="%" type="text/javascript"></script>',
-                regex:   new RegExp('<!--\\s*' + options.startTag + '\\s*-->(\\s*)(\\n|\\r|.)*?<!--\\s*' + options.endTag + '\\s*-->', 'gi'),
+				regex:   new RegExp(options.startTag + '(\\s*)(\\n|\\r|.)*?' + options.endTag, 'gi'),
+                // regex:   new RegExp('<!--\\s*' + options.startTag + '\\s*-->(\\s*)(\\n|\\r|.)*?<!--\\s*' + options.endTag + '\\s*-->', 'gi'),
                 comment: {
                     start: '<!-- ',
                     end:   ' -->'
@@ -45,7 +48,8 @@ module.exports = function (grunt) {
             },
             jade: {
                 recipe:  'script(src=\'%\' type=\'text/javascript\')',
-                regex:   new RegExp('//\\s*' + options.startTag + '(\\s*)(\\n|\\r|.)*?//\\s*' + options.endTag, 'gi'),
+				regex:   new RegExp(options.startTag + '(\\s*)(\\n|\\r|.)*?' + options.endTag, 'gi'),
+                // regex:   new RegExp('//\\s*' + options.startTag + '(\\s*)(\\n|\\r|.)*?//\\s*' + options.endTag, 'gi'),
                 comment: {
                     start: '// ',
                     end:   ''
@@ -53,7 +57,8 @@ module.exports = function (grunt) {
             },
             pug: {
                 recipe:  'script(src=\'%\' type=\'text/javascript\')',
-                regex:   new RegExp('//\\s*' + options.startTag + '(\\s*)(\\n|\\r|.)*?//\\s*' + options.endTag, 'gi'),
+                regex:   new RegExp(options.startTag + '(\\s*)(\\n|\\r|.)*?' + options.endTag, 'gi'),
+				// regex:   new RegExp('//\\s*' + options.startTag + '(\\s*)(\\n|\\r|.)*?//\\s*' + options.endTag, 'gi'),
                 comment: {
                     start: '// ',
                     end:   ''
@@ -67,7 +72,7 @@ module.exports = function (grunt) {
 
             for (var index in supportedExt) {
                 if (supportedExt.hasOwnProperty(index) && file.search(supportedExt[index]["regex"]) > -1 && extension[extension.length - 1] === index) {
-                    return pattern = index;
+					return pattern = index;
                 }
             }
             return pattern = null;
@@ -160,27 +165,64 @@ module.exports = function (grunt) {
             return to;
         }
 
+        // function inject(file) {
+        //     if (sortedScripts === null) {
+        //         sortedScripts = sortScripts();
+        //     }
+		//
+        //     var splitedFile = (grunt.file.read(file)).split(supportedExt[pattern]["regex"]);
+        //     var indentation = splitedFile[0].substr( splitedFile[0].lastIndexOf(EOL) + 1 ).match(/^[^\S\n\r]*/)[0];
+		//
+        //     splitedFile[1] = supportedExt[pattern]["comment"]["start"] + options.startTag + supportedExt[pattern]["comment"]["end"] + EOL;
+        //     sortedScripts.forEach(function (script) {
+        //         splitedFile[1] += indentation + ((supportedExt[pattern]["recipe"]).replace('%', resolvePath(file, script))) + EOL;
+        //     });
+        //     splitedFile[2] = indentation + supportedExt[pattern]["comment"]["start"] + options.endTag + supportedExt[pattern]["comment"]["end"];
+		//
+        //     try {
+        //         grunt.file.write(file, splitedFile.join(''));
+        //         grunt.log.ok(sortedScripts.length + " files inserted into " + file);
+        //     } catch (error) {
+        //         throw grunt.log.error("Can't write in" + file + " error : " + error);
+        //     }
+        // }
+
         function inject(file) {
-            if (sortedScripts === null) {
-                sortedScripts = sortScripts();
-            }
+			var scripts,
+				page = '',
+				newPage = '',
+				start = -1,
+				end = -1;
 
-            var splitedFile = (grunt.file.read(file)).split(supportedExt[pattern]["regex"]);
-            var indentation = splitedFile[0].substr( splitedFile[0].lastIndexOf(EOL) + 1 ).match(/^[^\S\n\r]*/)[0];
+			if (sortedScripts === null) {
+				sortedScripts = sortScripts();
+				sortedScripts = sortedScripts.map(function (filepath) {
+					return (options.fileTmpl).replace('%', resolvePath(file, filepath));
+				});
+			}
 
-            splitedFile[1] = supportedExt[pattern]["comment"]["start"] + options.startTag + supportedExt[pattern]["comment"]["end"] + EOL;
-            sortedScripts.forEach(function (script) {
-                splitedFile[1] += indentation + ((supportedExt[pattern]["recipe"]).replace('%', resolvePath(file, script))) + EOL;
-            });
-            splitedFile[2] = indentation + supportedExt[pattern]["comment"]["start"] + options.endTag + supportedExt[pattern]["comment"]["end"];
+			page = grunt.file.read(file);
+			start = page.indexOf(options.startTag);
+			end = page.indexOf(options.endTag, start);
 
-            try {
-                grunt.file.write(file, splitedFile.join(''));
-                grunt.log.ok(sortedScripts.length + " files inserted into " + file);
-            } catch (error) {
-                throw grunt.log.error("Can't write in" + file + " error : " + error);
-            }
-        }
+			if (start === -1 || end === -1 || start >= end) {
+				return;
+			} else {
+				var padding ='';
+				var ind = start - 1;
+				while(/[^\S\n]/.test(page.charAt(ind))){
+					padding += page.charAt(ind);
+					ind -= 1;
+				}
+
+				newPage = page.substr(0, start + (options.startTag.length))
+					+ grunt.util.linefeed + padding + sortedScripts.join(grunt.util.linefeed + padding)
+					+ grunt.util.linefeed + padding + page.substr(end);
+				// Insert the scripts
+				grunt.file.write(file, newPage);
+				grunt.log.ok(sortedScripts.length + " files inserted into " + file);
+			}
+		}
 
         if (options.scripts == null) {
             grunt.log.error('No scripts to inject');
