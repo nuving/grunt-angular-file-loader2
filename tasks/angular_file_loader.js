@@ -12,6 +12,7 @@ var ngDeps = require('ng-dependencies');
 var toposort = require('toposort');
 var path = require('path');
 var EOL = require('os').EOL;
+var util = require('util');
 
 module.exports = function (grunt) {
 
@@ -222,7 +223,7 @@ module.exports = function (grunt) {
 					if (targetConfig) {
 						targetConfig.push(require('path').join(options.configAppRoot, resolvedPath));
 					}
-					return (options.fileTmpl).replace('%', resolvedPath);
+					return util.format(options.fileTmpl, resolvedPath);
 				});
 			}
 
