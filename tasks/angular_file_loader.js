@@ -29,9 +29,10 @@ module.exports = function (grunt) {
             endTag:   '<!-- endangular -->',
 			fileTmpl: '<script src="%s"></script>',
             scripts:  null,
-			appRoot: '',
-			relative: false,
-			inline: false
+			relative: true,
+			prefix: '',
+			writeConfig: false,
+			configAppRoot: ''
         });
 
         var ANGULAR_MODULE = 'ng';
@@ -65,6 +66,16 @@ module.exports = function (grunt) {
                 }
             }
         };
+
+        var writeConfig = (options.writeConfig && grunt.util.kindOf(options.writeConfig) === "string");
+		if (writeConfig && !options.configAppRoot) {
+			grunt.warn(
+				'\'writeConfig\' is enabled. ' +
+				'Set configAppRoot option to append to path if script path is relative.'
+			);
+
+			writeConfig = false;
+		}
 
         function whichPattern(filepath) {
             var extension = filepath.split('.');
@@ -192,13 +203,31 @@ module.exports = function (grunt) {
 				page = '',
 				newPage = '',
 				start = -1,
-				end = -1;
+				end = -1,
+				targetConfig = null;
 
 			if (sortedScripts === null) {
 				sortedScripts = sortScripts();
+				if (writeConfig) {
+					targetConfig = grunt.config( options.writeConfig );
+				}
+
+				if (!targetConfig) {
+					grunt.log.error('`writeConfig` defines a target that has not been defined in the grunt task. Please define as empty array.');
+				}
+
+
 				sortedScripts = sortedScripts.map(function (filepath) {
-					return (options.fileTmpl).replace('%', resolvePath(file, filepath));
+					var resolvedPath = resolvePath(file, filepath);
+					if (targetConfig) {
+						targetConfig.push(require('path').join(options.configAppRoot, resolvedPath));
+					}
+					return (options.fileTmpl).replace('%', resolvedPath);
 				});
+			}
+
+			if (targetConfig) {
+				grunt.config( options.writeConfig, targetConfig );
 			}
 
 			page = grunt.file.read(file);

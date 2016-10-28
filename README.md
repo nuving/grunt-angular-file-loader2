@@ -360,7 +360,24 @@ After
   </body>
 </html>
 ```
+#### writeConfig : false
+In this example, the writeConfig options is set to `jsResources`, after `./app/scripts/**/*.js` had been sorted they are stored in `jsResources` as well as injected into `index.html` between `<!-- angular -->` and `<!-- endangular -->`.
+Please note that this option is also used in conjunction with configAppRoot to specify any path that needs to be appended to each script path, assuming script path is relative.
 
+```js
+grunt.initConfig({
+  angularFileLoader: {
+    options: {
+      scripts: ['app/scripts/**/*.js']
+      writeConfig : 'jsResources',
+      configAppRoot: '.tmp/public/'
+    },
+    default_options: {
+      src : '.tmp/index.html'
+    },
+  },
+});
+```
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
